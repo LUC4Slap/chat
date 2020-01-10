@@ -18,6 +18,7 @@ io.on('connection', socket => {
     console.log(`Usuario desconectou: ${socket.id}`);
   });
 
+  // DIALOGO
   socket.on('msgParaServidor', data => {
     socket.emit('msgParaCliente', {
       apelido: data.apelido,
@@ -28,5 +29,16 @@ io.on('connection', socket => {
       apelido: data.apelido,
       mensagem: data.mensagem,
     });
+
+    // ATUALIZAR RELAÇÃO DE PARTICIPANTES
+    if (parseInt(data.apelido_atualizado_nos_clientes) == 0) {
+      socket.emit('participantesParaCliente', {
+        apelido: data.apelido,
+      });
+
+      socket.broadcast.emit('participantesParaCliente', {
+        apelido: data.apelido,
+      });
+    }
   });
 });
