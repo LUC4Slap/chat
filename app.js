@@ -2,6 +2,8 @@
 let app = require('./config/server');
 
 // PARAMETRIZAR A PORTA DE ESCUTA
-app.listen(80, () => {
+let server = app.listen(80, () => {
   console.log('SERVIDOR ON');
 });
+
+require('socket.io').listen(server);
